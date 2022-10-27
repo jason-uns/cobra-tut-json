@@ -31,6 +31,7 @@ to quickly create a Cobra application.`,
 		result := search(mobile)
 		if result == nil {
 			fmt.Println("Mobile not found", mobile)
+			return
 		}
 		fmt.Println(*result)
 	},
