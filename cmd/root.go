@@ -92,7 +92,13 @@ to quickly create a Cobra application.`,
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	err := readJSONFile(DATAFILE)
+	err := writeJSONFile(DATAFILE)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = readJSONFile(DATAFILE)
 	if err != nil && err != io.EOF {
 		fmt.Println(err)
 		return
