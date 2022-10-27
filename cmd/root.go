@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/spf13/cobra"
 	"io"
 	"os"
@@ -93,6 +94,7 @@ to quickly create a Cobra application.`,
 func Execute() {
 	err := readJSONFile(DATAFILE)
 	if err != nil && err != io.EOF {
+		fmt.Println(err)
 		return
 	}
 
