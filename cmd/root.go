@@ -63,6 +63,26 @@ func writeJSONFile(path string) error {
 	return serialize(records, file)
 }
 
+func createJSONFile() error {
+	_, err := os.Stat(DATAFILE)
+	if err != nil {
+		file, err := os.Create(DATAFILE)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+		defer file.Close()
+	}
+
+	fileInfo, err := os.Stat(DATAFILE)
+
+	mode := fileInfo.Mode()
+	if !mode.IsRegular() {
+		return fmt.Errorf("%s is not a regular file", DATAFILE)
+	}
+	return nil
+}
+
 func createIndex() {
 	for index, value := range records {
 		phoneBookIndex[value.Mobile] = index
@@ -92,7 +112,7 @@ to quickly create a Cobra application.`,
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	err := writeJSONFile(DATAFILE)
+	err := createJSONFile()
 	if err != nil {
 		fmt.Println(err)
 		return
